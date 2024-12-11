@@ -6,8 +6,8 @@ let products = [
     {
         id: 1,
         descripcion: "Salsa P",
-        peso: 3,
-        unidad: "Kg Bolsa"
+        peso: 18.18,
+        unidad: "Kg Caja"
     },
     {
         id: 2,
@@ -37,61 +37,61 @@ let products = [
         id: 6,
         descripcion: "Chicharron R.",
         peso: 1,
-        unidad: "Kg bolsa"
+        unidad: "Kg Bolsa"
     },
     {
         id: 7,
         descripcion: "Chorizo.",
         peso: 2.27,
-        unidad: "Gr bolsa"
+        unidad: "Kg Bolsa"
     },
     {
         id: 8,
         descripcion: "Jamon",
-        peso: .500,
-        unidad: "Gr Bolsa"
+        peso: 1.36,
+        unidad: "Kg Bolsa"
     },
     {
         id: 9,
         descripcion: "Peperonni",
-        peso: 11.4,
+        peso: 11.34,
         unidad: "Kg Caja"
     },
     {
         id: 10,
         descripcion: "Salchicha ITA.",
-        peso: 2.27,
-        unidad: "Kg"
+        peso: 2.26,
+        unidad: "Kg Bolsa"
     },
     {
         id: 11,
         descripcion: "Tocino",
         peso: 2.5,
-        unidad: "Kg bolsa"
+        unidad: "Kg Bolsa"
     },
     {
         id: 12,
         descripcion: "Papas Gajo",
         peso: 2.27,
-        unidad: "Kg bolsa"
+        unidad: "Kg Bolsa"
     },
     {
         id: 13,
         descripcion: "Muncher",
-        peso: 1.39,
-        unidad: "Kg"
+        peso: 1.36,
+        unidad: "Kg Bolsa"
     },
     {
         id: 14,
         descripcion: "Queso",
-        peso: 13.6,
-        unidad: "Caja"
+        peso: 13.61,
+        unidad: "Kg Caja"
     },
     {
         id: 15,
         descripcion: "Queso Orilla",
-        peso: 2.8,
-        unidad: "Caja"
+        peso: 6.80,
+        unidad: "Kg Caja"
     }
 ]
 
