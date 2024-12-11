@@ -1,0 +1,135 @@
+:root{
+    --var-background-add: #C62828;
+    --var-background-minus: #2E7D32;
+    --var-color-white: #fff;
+    --var-background-modify: #37474F;
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    font-family: "Roboto", sans-serif;
+}
+
+html{
+    font-size: 12px;
+}
+
+body{
+    padding: 1em;
+    font-size: 1em;
+    background-color: rgb(240, 240, 240);
+}
+
+.content-inventory{
+    width: 100%;    
+    box-sizing: content-box;
+}
+
+.content-inventory .title{
+    margin-bottom: 2em;    
+    height: 40px;
+    border-radius: .08em;
+    border-bottom: 4px solid black;
+}
+
+.content-inventory .list-products{
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+.content-inventory .list-products article:nth-last-child(1) 
+{
+    margin-bottom: 4em;   
+}
+
+.content-inventory .list-products .product{
+    display: grid;    
+    position: relative;
+    padding: 1em 0;
+    background: rgb(241, 241, 241);
+    grid-template-columns: 50px 1fr 1fr;
+    box-shadow: 0px 0px 1px 2px rgb(161, 161, 161);
+    gap: 1em;
+    align-items: center;
+    z-index: 1;
+}
+
+.content-inventory .list-products .product .icon{
+    background: rgb(206, 206, 206);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-inventory .list-products .product .options{
+    display: grid;
+    grid-template-columns: repeat(2, 60px);
+    gap: .2em;
+}
+
+.content-inventory .list-products .product .options > *{
+    font-size: 0.8em;
+    padding: 1em;
+    font-weight: bold;
+    border-radius: 0.4em;
+    z-index: 2;    
+}
+
+.content-inventory .list-products .product .btn-action{
+    border:none;
+}
+
+.content-inventory .list-products .product .input-info{
+    text-align: center;
+}
+
+.content-inventory .list-products .product .update{
+    position: absolute;    
+    top: -15px;
+    right: -10px;    
+    z-index: 3;
+}
+
+.content-inventory .list-products .product .update button{
+    border-radius: .5em;
+    width: 60px;
+    border: none;
+    box-shadow: 0 0 1px 2px rgb(42, 42, 42);
+    height: 20px;
+    background: var(--var-background-modify);
+    color: var(--var-color-white);
+}
+
+.btn_add{
+    background-color: var(--var-background-minus);
+    color: var(--var-color-white);
+    font-weight: bold;
+}
+
+.icon i {
+    font-size: 1.3em;
+    color: var(--var-color-white);
+}
+
+.btn_minus{
+    background-color: var(--var-background-add);
+    color: var(--var-color-white);
+}
+
+
+.check-product{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    z-index: 1;
+    opacity: 0;
+}
+
+

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./modal.css">
+    <title>Document</title>
+</head>
+<body>
+    <section class="content-inventory">
+        <section class="title">
+            <h2>Inventario pizzeria</h2>            
+        </section>
+        <section class="list-products" id="content_products">
+           
+        </section>
+    </section>
+
+     <!-- El Modal -->
+     <div id="myModal" class="modal">
+         <!-- Modal contenido -->
+         <div class="modal-content">
+            <section class="title">
+                <span class="close">&times;</span>
+                <h2>Producto</h2>
+            </section>
+             <section class="count-product">
+                <div class="c-product">
+                    <div class="c-id">
+                        <h3>#</h3>
+                    </div>
+                    <div class="c-description">
+                        <h3>Descripcion</h3>
+                    </div>
+                    <div class="c-cantidad">
+                        <h3>Peso</h3>
+                    </div>
+                    <div class="c-options">
+                        <h3>Agregar</h3>
+                    </div>
+                </div>
+                <div class="c-product">
+                    <div class="c-id">
+                        <h4 id="pd-id">1</h4>
+                    </div>
+                    <div class="c-description">
+                        <h4 id="pd-description">Salsa verde R</h4>
+                    </div>
+                    <div class="c-cantidad">
+                        <h4 id="pd-cantidad" class="pd-peso">3</h4>
+                    </div>
+                    <div class="c-options">
+                        <button class="btn-new-update fa-solid fa-plus"></button>
+                    </div>
+                </div>
+                <div class="c-movement" id="content-movement">
+                    
+                </div>
+                <div class="c-product">
+                    <div class="c-id">
+                        <h4>Total</h4>
+                    </div>
+                    <div class="c-description">
+                        <h4></h4>
+                    </div>
+                    <div class="c-cantidad">
+                        <h4>3</h4>
+                    </div>
+                    <div class="c-options">
+                        
+                    </div>
+                </div>
+
+                
+             </section>
+             <button id="addNewMovement" class="btn-modal">Guardar Cambios</button>
+             <button id="closeModalBtn" class="btn-modal">Cerrar Modal</button>
+         </div>
+     </div>
+</body>
+<script src="./script.js"></script>
+<script src="./modal.js"></script>
+</html>

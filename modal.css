@@ -1,0 +1,157 @@
+
+/* Estilos del botón */
+#openModalBtn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#openModalBtn:hover {
+    background-color: #45a049;
+}
+
+/* Estilos del modal */
+.modal {
+    display: none;
+    position: fixed; /* Fijo en la pantalla */
+    z-index: 1; /* Asegura que esté encima de otros elementos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo translúcido */
+}
+
+/* Contenido del modal */
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+}
+.modal .title{
+    margin-bottom: 2em;
+}
+.title h2 {
+    margin: 0;
+}
+
+/* El botón de cerrar */
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#closeModalBtn {
+    background-color: var(--var-background-add);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-modal{
+    font-size: .8em;
+    border: 1px solid #9a9a9a;
+    padding: 10px 2px;
+    border-radius: 0.4em;
+}
+
+#closeModalBtn:hover {
+    background-color: #e53935;
+}
+
+.count-product{
+    margin-bottom: 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.c-product {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid black;
+    padding: 10px 0;
+    text-align: start;
+}
+
+.c-product div {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.c-id, .c-description {
+    text-align: start;
+}
+
+.c-id {
+    width: 10%;
+    text-align: left;
+}
+
+.c-description {
+    width: 40%;
+}
+
+.c-cantidad {
+    width: 20%;
+    text-align: center;
+}
+
+.c-options {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.c-product h3, .c-product h4 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+.btn-new-update {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.c-movement{
+    width: 100%;
+}
+
+.c-cantidad input.pd-peso {
+    width: 100%; /* Ocupa el 100% del contenedor padre */
+    max-width: 100%; /* Asegúrate de que no se expanda más del contenedor */
+    box-sizing: border-box; /* Incluye padding y border en el ancho total */
+}
