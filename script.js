@@ -116,8 +116,8 @@ function onLoadData() {
                     <div class="options">
                     <button class="btn-action fa-solid fa-plus btn_add" data-id="${product.id}"></button>
                     <button class="btn-action fa-solid fa-minus btn_minus" data-id="${product.id}"></button>
-                <input class="input-info" type="number" value="0" id="cantidad-${product.id}">
-                <input class="input-info" type="number" value="0" id="peso-final-${product.id}">
+                <input class="input-cantidad input-info" type="number" data-cantidad="${product.id}" value="0" id="cantidad-${product.id}">
+                <input class="input-info" type="number" value="0" id="peso-final-${product.id}" disabled>
                     <div class="update">
                         <button class="btn-update" data-update="${product.id}" id="editar-${product.id}">Update</button>
                     </div>
@@ -241,6 +241,34 @@ const active_checkbox = (event) => {
 };
 
 
+const change_count = (event) => {
+    const currentlyElement = event.target;
+    const id = currentlyElement.dataset.cantidad;
+    const cantidad = parseFloat(currentlyElement.value);
+    const elementPeso = document.querySelector(`#peso-final-${id}`);    
+    let peso = 0;
+
+    if(cantidad > 0)
+        {
+            const productoSeleccionado = products.find(producto => producto.id === parseInt(id))
+            if (productoSeleccionado) {
+                peso = cantidad * productoSeleccionado.peso;
+                peso = peso.toFixed(2);
+                console.log(productoSeleccionado); 
+                console.log(`Cantidad: ${cantidad}`);
+                console.log(`Peso: ${productoSeleccionado.peso}`);
+                console.log(`Peso Total: ${peso}`);
+                elementPeso.value = peso;
+            } else {
+                console.log('Producto no encontrado');
+            }
+        }
+        else{
+            elementPeso.value = 0;
+        }
+
+}
+
 
 // Obtener el modal
 const modal = document.getElementById("myModal");
@@ -263,8 +291,6 @@ closeModalSpan.addEventListener('click', function() {
 closeModalBtn.addEventListener('click', function() {
     modal.style.display = "none";
 });
-
-
 
 // Cerrar el modal si el usuario hace clic fuera del modal
 window.addEventListener('click', function(event) {
@@ -294,6 +320,10 @@ document.querySelectorAll(".btn-update").forEach(button => {
 
 document.querySelectorAll(".check-product").forEach(checkbox => {
     checkbox.addEventListener('change', (event) => active_checkbox(event))
+})
+
+document.querySelectorAll(".input-cantidad").forEach(cantidadChange => {
+    cantidadChange.addEventListener('change', (event) => change_count(event))
 })
 
 document.querySelector('.btn-new-update').addEventListener('click', (event) => new_weight(event));
