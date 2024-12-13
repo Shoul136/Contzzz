@@ -28,6 +28,7 @@
             <section class="title">
                 <span class="close">&times;</span>
                 <h2>Producto</h2>
+                <h4 style="color: rgb(81, 81, 81);">Peso de producto + individuales</h4>
             </section>
              <section class="count-product">
                 <div class="c-product">
@@ -52,7 +53,7 @@
                         <h4 id="pd-description">Salsa verde R</h4>
                     </div>
                     <div class="c-cantidad">
-                        <h4 id="pd-cantidad" class="pd-peso">3</h4>
+                        <input type="number" class="pd-peso" id="pd-cantidad" value="0" disabled />
                     </div>
                     <div class="c-options">
                         <button class="btn-new-update fa-solid fa-plus"></button>
@@ -61,7 +62,7 @@
                 <div class="c-movement" id="content-movement">
                     
                 </div>
-                <div class="c-product">
+                <div class="c-product c-total">
                     <div class="c-id">
                         <h4>Total</h4>
                     </div>
@@ -69,7 +70,7 @@
                         <h4></h4>
                     </div>
                     <div class="c-cantidad">
-                        <h4>3</h4>
+                        <h4 id="c-total">3</h4>
                     </div>
                     <div class="c-options">
                         
@@ -78,7 +79,6 @@
 
                 
              </section>
-             <button id="addNewMovement" class="btn-modal">Guardar Cambios</button>
              <button id="closeModalBtn" class="btn-modal">Cerrar Modal</button>
          </div>
      </div>

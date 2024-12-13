@@ -7,101 +7,152 @@ let products = [
         id: 1,
         descripcion: "Salsa P",
         peso: 18.18,
-        unidad: "Kg Caja"
+        unidad: "Kg Caja",
+        cantidadActual: 0
     },
     {
         id: 2,
         descripcion: "Salsa Verder R",
         peso: 3,
-        unidad: "Kg Bolsa"
+        unidad: "Kg Bolsa",
+        cantidadActual: 0
     },
     {
         id: 3,
         descripcion: "Alitas",
         peso: 2,
-        unidad: "Kg Bolsa"
+        unidad: "Kg Bolsa",
+        cantidadActual: 0
     },
     {
         id: 4,
         descripcion: "Boneless Bufalo",
         peso: 2,
-        unidad: "Kg Bolsa"
+        unidad: "Kg Bolsa",
+        cantidadActual: 0
     },
     {
         id: 5,
         descripcion: "Boneless Natural",
         peso: 2,
-        unidad: "Kg Bolsa"
+        unidad: "Kg Bolsa",
+        cantidadActual: 0
     },
     {
         id: 6,
         descripcion: "Chicharron R.",
         peso: 1,
-        unidad: "Kg Bolsa"
+        unidad: "Kg Bolsa",
+        cantidadActual: 0
     },
     {
         id: 7,
         descripcion: "Chorizo.",
         peso: 2.27,
-        unidad: "Kg Bolsa"
+        unidad: "Kg Bolsa",
+        cantidadActual: 0
     },
     {
         id: 8,
         descripcion: "Jamon",
         peso: 1.36,
-        unidad: "Kg Bolsa"
+        unidad: "Kg Bolsa",
+        cantidadActual: 0
     },
     {
         id: 9,
         descripcion: "Peperonni",
         peso: 11.34,
-        unidad: "Kg Caja"
+        unidad: "Kg Caja",
+        cantidadActual: 0
     },
     {
         id: 10,
         descripcion: "Salchicha ITA.",
         peso: 2.26,
-        unidad: "Kg Bolsa"
+        unidad: "Kg Bolsa",
+        cantidadActual: 0
     },
     {
         id: 11,
         descripcion: "Tocino",
         peso: 2.5,
-        unidad: "Kg Bolsa"
+        unidad: "Kg Bolsa",
+        cantidadActual: 0
     },
     {
         id: 12,
         descripcion: "Papas Gajo",
         peso: 2.27,
-        unidad: "Kg Bolsa"
+        unidad: "Kg Bolsa",
+        cantidadActual: 0
     },
     {
         id: 13,
         descripcion: "Muncher",
         peso: 1.36,
-        unidad: "Kg Bolsa"
+        unidad: "Kg Bolsa",
+        cantidadActual: 0
     },
     {
         id: 14,
         descripcion: "Queso",
         peso: 13.61,
-        unidad: "Kg Caja"
+        unidad: "Kg Caja",
+        cantidadActual: 0
     },
     {
         id: 15,
         descripcion: "Queso Orilla",
         peso: 6.80,
-        unidad: "Kg Caja"
+        unidad: "Kg Caja",
+        cantidadActual: 0
+    },
+    {
+        id: 16,
+        descripcion: "Harina 5",
+        peso: 10,
+        unidad: "Bolitas",
+        cantidadActual: 0
+    },
+    {
+        id: 17,
+        descripcion: "Harina 10",
+        peso: 10,
+        unidad: "Bolitas",
+        cantidadActual: 0
+    },
+    {
+        id: 18,
+        descripcion: "Harina 17",
+        peso: 10,
+        unidad: "Bolitas",
+        cantidadActual: 0
+    },
+    {
+        id: 19,
+        descripcion: "Harina 17 Mantq",
+        peso: 10,
+        unidad: "Bolitas",
+        cantidadActual: 0
     }
 ]
 
 let movement = []
+if(!localStorage.getItem('products'))
+{
+    localStorage.setItem('products', JSON.stringify(products));
+    localStorage.setItem('movement', JSON.stringify(movement))
+}
 
-console.log(products)
+const LocalProducts = JSON.parse(localStorage.getItem('products'))
+let LocalMovement = JSON.parse(localStorage.getItem('movement'))
+
+
 
 // add all products.
 function onLoadData() {
-    products.map(product => {
+    LocalProducts.map(product => {
         const add_product = document.createElement('article');
         add_product.classList.add('product');
         add_product.id = product.id;
@@ -116,17 +167,17 @@ function onLoadData() {
                     <div class="options">
                     <button class="btn-action fa-solid fa-plus btn_add" data-id="${product.id}"></button>
                     <button class="btn-action fa-solid fa-minus btn_minus" data-id="${product.id}"></button>
-                <input class="input-cantidad input-info" type="number" data-cantidad="${product.id}" value="0" id="cantidad-${product.id}">
-                <input class="input-info" type="number" value="0" id="peso-final-${product.id}" disabled>
+                <input class="input-cantidad input-info" type="number" data-cantidad="${product.id}" value="${product.cantidadActual}" id="cantidad-${product.id}">
+                <input class="input-info" type="number" value="${product.cantidadActual * product.peso}" id="peso-final-${product.id}" disabled>
                     <div class="update">
-                        <button class="btn-update" data-update="${product.id}" id="editar-${product.id}">Update</button>
+                        <button class="btn-update" data-update="${product.id}" id="editar-${product.id}">Individuales</button>
                     </div>
         `;
         content_products.appendChild(add_product)
     })
 }
 
-
+// Metodo para modificar el peso con las cantidades de los botones mas y menos
 const add_count = (event, type) => {        
     let peso = 0;
     const currentlyElement = event.target;
@@ -139,17 +190,14 @@ const add_count = (event, type) => {
     } else if (type === "minus" && cantidad > 0) {
         cantidad -= 1;
     }
-    console.log(cantidad)
+    const productoSeleccionado = LocalProducts.find(product => product.id === parseInt(productId));
+
     if(cantidad > 0)
     {
-        const productoSeleccionado = products.find(product => product.id === parseInt(productId));
         if (productoSeleccionado) {
             peso = cantidad * productoSeleccionado.peso;
             peso = peso.toFixed(2);
-            console.log(productoSeleccionado); 
-            console.log(`Cantidad: ${cantidad}`);
-            console.log(`Peso: ${productoSeleccionado.peso}`);
-            console.log(`Peso Total: ${peso}`);
+            productoSeleccionado.cantidadActual = cantidad;
             elementCantidad.value = cantidad;
             elementPeso.value = peso;
         } else {
@@ -157,32 +205,73 @@ const add_count = (event, type) => {
         }
     }
     else{
+        productoSeleccionado.cantidadActual = cantidad;
         elementCantidad.value = 0;
         elementPeso.value = 0;
     }
+    actualizarLocalStorageProduct();
 }
 
-const edit_weight = (event) => { 
-    load_movement();   
+const actualizarLocalStorageProduct = () => {
+    localStorage.setItem('products', JSON.stringify(LocalProducts))
+}
+
+const actualizarLocalStorageMovement = () => {
+    localStorage.setItem('movement', JSON.stringify(LocalMovement))
+}
+
+const edit_weight = (event) => {      
     const currentlyElement = event.target;
     const productId = currentlyElement.dataset.update;  // Accede al atributo data-id
-    const currentProduct = products.find(product => product.id === parseInt(productId))
+    const currentProduct = LocalProducts.find(product => product.id === parseInt(productId))
     const currentWeight = document.querySelector(`#peso-final-${productId}`).value
     document.querySelector('#pd-id').textContent = currentProduct.id;
     document.querySelector('#pd-description').textContent = currentProduct.descripcion;
-    document.querySelector('#pd-cantidad').textContent = currentWeight;
+    document.querySelector('#pd-cantidad').value = currentWeight;
+    load_movement(productId, currentProduct);  
     sum_weights();
     modal.style.display = "block";
+    // Esperar un pequeño tiempo antes de agregar la clase 'active' para permitir la animación
+    setTimeout(() => {
+        modal.querySelector('.modal-content').classList.add('active');
+    }, 10); // Ajusta este tiempo si es necesario
     console.log(productId)
 }
 
-const load_movement = () => {
+const load_movement = (id, product) => {
+    const allMovement = LocalMovement.filter(movement2 => movement2.fk_product === parseInt(id))
+    console.log(allMovement, 'Local')
     content_movement.innerHTML = ``;
+    allMovement.forEach(movement => {
+        console.log(movement.weight, 'Movement')
+        const new_movement = document.createElement('div');
+        new_movement.classList.add('c-product');
+        new_movement.innerHTML = `
+                        <div class="c-id">
+                            <h4 id="pd-id">${movement.fk_product}</h4>
+                        </div>
+                        <div class="c-description">
+                            <h4 id="pd-description">${product.descripcion}</h4>
+                        </div>
+                        <div class="c-cantidad">
+                            <input type="number" class="pd-peso" value="${parseFloat(movement.weight)}" onchange="sum_weights()" />
+                        </div>
+                        <div class="c-options">
+                            <button class="btn-remove-movement fa-solid fa-minus" data-movement='${movement.id}'></button>
+                        </div>
+        `;
+        content_movement.appendChild(new_movement)
+    })
+    loadEventRemove();
 }
 
 const new_weight = (event) => {
     const id = parseInt(document.querySelector('#pd-id').textContent);
-    const product = products.find(product => product.id === id);
+    const maxId = LocalMovement.length > 0 
+        ? Math.max(...LocalMovement.map(mov => mov.id)) 
+        : 0;
+    const id_movement = maxId + 1;
+    const product = LocalProducts.find(product => product.id === id);
     const new_movement = document.createElement('div');
     new_movement.classList.add('c-product');
     new_movement.innerHTML = `
@@ -193,27 +282,85 @@ const new_weight = (event) => {
                         <h4 id="pd-description">${product.descripcion}</h4>
                     </div>
                     <div class="c-cantidad">
-                        <input type="number" class="pd-peso" value="0" />
+                        <input type="number" class="pd-peso" value="0" data-weight='${id_movement}' onchange="sum_weights()"/>
                     </div>
                     <div class="c-options">
-                       
+                        <button class="btn-remove-movement fa-solid fa-minus" data-movement='${id_movement}'></button>
                     </div>
     `;
-    const nw_movement = 
-    {
-        id: movement != [] ? movement.length + 1 : 0,        
-    }
+    const nw_movement = {
+        id: id_movement,
+        fk_product: id,
+        weight: 0,
+        date: new Intl.DateTimeFormat('en-GB', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        }).format(new Date()) // Formato 'DD/MM/YYYY'
+    };
+    LocalMovement.push(nw_movement)
+    actualizarLocalStorageMovement()
     content_movement.appendChild(new_movement)
     console.log(id)
+    loadEventRemove();
 }
 
-const sum_weights = () => {
+
+const remove_movement = (event) => {
+    const currentMovement = event.target;
+    const movementId = parseInt(currentMovement.dataset.movement);
+
+    // Verificar que movementId es válido
+    if (!movementId) {
+        console.error("El ID del movimiento no es válido:", movementId);
+        return;
+    }
+
+    // Buscar el movimiento
+    const foundMovement = LocalMovement.find(movem => movem.id === movementId);
+
+    // Validar si el movimiento existe antes de continuar
+    if (!foundMovement) {
+        console.warn(`Movimiento con ID ${movementId} no encontrado en el array.`);
+        return;
+    }
+
+    // Buscar el producto asociado
+    const currentProduct = LocalProducts.find(product => product.id === foundMovement.fk_product);
+    if (!currentProduct) {
+        console.warn(`Producto con ID ${foundMovement.fk_product} no encontrado.`);
+        return;
+    }
+
+    // Remover el movimiento del array
+    LocalMovement = LocalMovement.filter(movem => movem.id !== movementId);
+    console.log(`Movimiento con ID ${movementId} eliminado.`);
+    console.log('Movimientos restantes:', LocalMovement);
+    actualizarLocalStorageMovement()
+    load_movement(currentProduct.id, currentProduct);
+    sum_weights();
+};
+
+const sum_weights = (event) => {
     const weights = document.querySelectorAll('.pd-peso');
-    let sum = 0;
-    console.log(weights)
-    weights.forEach(weight => {sum = sum +  parseFloat(weight.textContent)})
-    sum = sum.toFixed(2);
-    console.log(sum)
+    if(weights)
+    {
+        let sum = 0;
+        //weights.forEach(weight => {sum = sum +  parseFloat(weight.value)})
+        weights.forEach(weight => 
+            {
+                const currentlyMovement = parseInt(weight.dataset.weight);
+                const movementToUpdate = LocalMovement.find(mov => mov.id === currentlyMovement);
+                if (movementToUpdate) {
+                    movementToUpdate.weight = parseFloat(weight.value);
+                }
+                sum = sum + parseFloat(weight.value)
+            })
+        sum = sum.toFixed(2);
+        console.log(LocalMovement, 'Sumo')
+        actualizarLocalStorageMovement();
+        document.querySelector('#c-total').textContent = sum;
+    }
 }
 
 const active_checkbox = (event) => {
@@ -250,14 +397,10 @@ const change_count = (event) => {
 
     if(cantidad > 0)
         {
-            const productoSeleccionado = products.find(producto => producto.id === parseInt(id))
+            const productoSeleccionado = LocalProducts.find(producto => producto.id === parseInt(id))
             if (productoSeleccionado) {
                 peso = cantidad * productoSeleccionado.peso;
-                peso = peso.toFixed(2);
-                console.log(productoSeleccionado); 
-                console.log(`Cantidad: ${cantidad}`);
-                console.log(`Peso: ${productoSeleccionado.peso}`);
-                console.log(`Peso Total: ${peso}`);
+                peso = peso.toFixed(2);            
                 elementPeso.value = peso;
             } else {
                 console.log('Producto no encontrado');
@@ -266,7 +409,7 @@ const change_count = (event) => {
         else{
             elementPeso.value = 0;
         }
-
+        actualizarLocalStorageProduct();
 }
 
 
@@ -285,17 +428,21 @@ const closeModalBtn = document.getElementById("closeModalBtn");
 // Función para cerrar el modal cuando se hace clic en el <span>
 closeModalSpan.addEventListener('click', function() {
     modal.style.display = "none";
+    modal.querySelector('.modal-content').classList.remove('active');
+
 });
 
 // Función para cerrar el modal cuando se hace clic en el botón "Cerrar Modal"
 closeModalBtn.addEventListener('click', function() {
     modal.style.display = "none";
+    modal.querySelector('.modal-content').classList.remove('active');
 });
 
 // Cerrar el modal si el usuario hace clic fuera del modal
 window.addEventListener('click', function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
+        modal.querySelector('.modal-content').classList.remove('active');
     }
 });
 
@@ -325,5 +472,11 @@ document.querySelectorAll(".check-product").forEach(checkbox => {
 document.querySelectorAll(".input-cantidad").forEach(cantidadChange => {
     cantidadChange.addEventListener('change', (event) => change_count(event))
 })
+
+function loadEventRemove(){
+    document.querySelectorAll(".btn-remove-movement").forEach(btnRemoveMovement => {
+        btnRemoveMovement.addEventListener('click', (event) => remove_movement(event))
+    })
+}
 
 document.querySelector('.btn-new-update').addEventListener('click', (event) => new_weight(event));

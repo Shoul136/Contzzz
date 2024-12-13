@@ -11,6 +11,8 @@
     transition: background-color 0.3s ease;
 }
 
+
+
 #openModalBtn:hover {
     background-color: #45a049;
 }
@@ -36,7 +38,14 @@
     width: 80%;
     max-width: 500px;
     text-align: center;
+    position: relative;
+    transition: 0.5s;
+    top: -600px;
 }
+.modal-content.active{
+    top: 0;
+}
+
 .modal .title{
     margin-bottom: 2em;
 }
@@ -73,7 +82,7 @@
 .btn-modal{
     font-size: .8em;
     border: 1px solid #9a9a9a;
-    padding: 10px 2px;
+    padding: 10px 20px;
     border-radius: 0.4em;
 }
 
@@ -154,4 +163,14 @@
     width: 100%; /* Ocupa el 100% del contenedor padre */
     max-width: 100%; /* Asegúrate de que no se expanda más del contenedor */
     box-sizing: border-box; /* Incluye padding y border en el ancho total */
+}
+
+.c-movement h4, .c-movement input{
+    color: rgb(65, 65, 229);
+    font-weight: bold;
+}
+
+.c-total h4{
+    color: var(--var-background-minus);
+    font-weight: bold;
 }
