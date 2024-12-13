@@ -400,13 +400,15 @@ const change_count = (event) => {
             const productoSeleccionado = LocalProducts.find(producto => producto.id === parseInt(id))
             if (productoSeleccionado) {
                 peso = cantidad * productoSeleccionado.peso;
-                peso = peso.toFixed(2);            
+                peso = peso.toFixed(2);  
+                productoSeleccionado.cantidadActual = cantidad;          
                 elementPeso.value = peso;
             } else {
                 console.log('Producto no encontrado');
             }
         }
         else{
+            productoSeleccionado.cantidadActual = cantidad;          
             elementPeso.value = 0;
         }
         actualizarLocalStorageProduct();
