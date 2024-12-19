@@ -131,8 +131,8 @@ let products = [
     {
         id: 18,
         descripcion: "Harina",
-        peso: 5,
-        unidad: "Costales",
+        peso: 10,
+        unidad: "Kg",
         cantidadActual: 0
     },
     {
