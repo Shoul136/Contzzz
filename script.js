@@ -6,6 +6,7 @@ const content_movement = document.querySelector('#content-movement');
 const btn_reset = document.querySelector('#btn_reset')
 const btn_dowload_pdf = document.querySelector('#btn_dowload_pdf')
 
+
 let products = [
     {
         id: 1,
@@ -534,6 +535,6 @@ function loadEventRemove(){
 
 btn_reset.addEventListener('click', () => resetData())
 
-btn_dowload_pdf.addEventListener('click', () => generatePDF())
+btn_dowload_pdf.addEventListener('click', () => generatePDF(LocalProducts))
 
 document.querySelector('.btn-new-update').addEventListener('click', (event) => new_weight(event));
