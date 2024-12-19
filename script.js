@@ -1,6 +1,10 @@
+import generatePDF from './generatePDF.js';
+
 // tags
 const content_products = document.querySelector('#content_products')
 const content_movement = document.querySelector('#content-movement');
+const btn_reset = document.querySelector('#btn_reset')
+const btn_dowload_pdf = document.querySelector('#btn_dowload_pdf')
 
 let products = [
     {
@@ -12,146 +16,179 @@ let products = [
     },
     {
         id: 2,
+        descripcion: "Salsa individual",
+        peso: 112,
+        unidad: "Pizzas",
+        cantidadActual: 0
+    },
+    {
+        id: 3,
         descripcion: "Salsa Verder R",
         peso: 3,
         unidad: "Kg Bolsa",
         cantidadActual: 0
     },
     {
-        id: 3,
+        id: 4,
         descripcion: "Alitas",
         peso: 2,
         unidad: "Kg Bolsa",
         cantidadActual: 0
     },
     {
-        id: 4,
+        id: 5,
         descripcion: "Boneless Bufalo",
         peso: 2,
         unidad: "Kg Bolsa",
         cantidadActual: 0
     },
     {
-        id: 5,
+        id: 6,
         descripcion: "Boneless Natural",
         peso: 2,
         unidad: "Kg Bolsa",
         cantidadActual: 0
     },
     {
-        id: 6,
+        id: 7,
         descripcion: "Chicharron R.",
         peso: 1,
         unidad: "Kg Bolsa",
         cantidadActual: 0
     },
     {
-        id: 7,
+        id: 8,
         descripcion: "Chorizo.",
         peso: 2.27,
         unidad: "Kg Bolsa",
         cantidadActual: 0
     },
     {
-        id: 8,
+        id: 9,
         descripcion: "Jamon",
         peso: 1.36,
         unidad: "Kg Bolsa",
         cantidadActual: 0
     },
     {
-        id: 9,
+        id: 10,
         descripcion: "Peperonni",
         peso: 11.34,
         unidad: "Kg Caja",
         cantidadActual: 0
     },
     {
-        id: 10,
+        id: 11,
         descripcion: "Salchicha ITA.",
         peso: 2.26,
         unidad: "Kg Bolsa",
         cantidadActual: 0
     },
     {
-        id: 11,
+        id: 12,
         descripcion: "Tocino",
         peso: 2.5,
         unidad: "Kg Bolsa",
         cantidadActual: 0
     },
     {
-        id: 12,
+        id: 13,
+        descripcion: "Spaguetti",
+        peso: 5,
+        unidad: "Tubo",
+        cantidadActual: 0
+    },
+    {
+        id: 14,
         descripcion: "Papas Gajo",
         peso: 2.27,
         unidad: "Kg Bolsa",
         cantidadActual: 0
     },
     {
-        id: 13,
+        id: 15,
         descripcion: "Muncher",
         peso: 1.36,
         unidad: "Kg Bolsa",
         cantidadActual: 0
     },
     {
-        id: 14,
+        id: 16,
         descripcion: "Queso",
         peso: 13.61,
         unidad: "Kg Caja",
         cantidadActual: 0
     },
     {
-        id: 15,
+        id: 17,
         descripcion: "Queso Orilla",
         peso: 6.80,
         unidad: "Kg Caja",
         cantidadActual: 0
     },
+    
     {
-        id: 16,
+        id: 18,
+        descripcion: "Harina",
+        peso: 5,
+        unidad: "Costales",
+        cantidadActual: 0
+    },
+    {
+        id: 19,
         descripcion: "Harina 5",
         peso: 10,
         unidad: "Bolitas",
         cantidadActual: 0
     },
     {
-        id: 17,
+        id: 20,
         descripcion: "Harina 10",
         peso: 10,
         unidad: "Bolitas",
         cantidadActual: 0
     },
     {
-        id: 18,
+        id: 21,
         descripcion: "Harina 17",
         peso: 10,
         unidad: "Bolitas",
         cantidadActual: 0
     },
     {
-        id: 19,
+        id: 22,
         descripcion: "Harina 17 Mantq",
         peso: 10,
         unidad: "Bolitas",
+        cantidadActual: 0
+    },
+    {
+        id: 23,
+        descripcion: "Cajas",
+        peso: 100,
+        unidad: "Cajas",
         cantidadActual: 0
     }
 ]
 
 let movement = []
-if(!localStorage.getItem('products'))
-{
-    localStorage.setItem('products', JSON.stringify(products));
-    localStorage.setItem('movement', JSON.stringify(movement))
+
+let LocalProducts = []
+let LocalMovement = []
+
+if (!localStorage.getItem('products') || !localStorage.getItem('movement')) {
+    console.log('Cargando datos iniciales');
+    load_data_local();
 }
-
-const LocalProducts = JSON.parse(localStorage.getItem('products'))
-let LocalMovement = JSON.parse(localStorage.getItem('movement'))
-
-
+else{
+    LocalProducts = JSON.parse(localStorage.getItem('products'))
+    LocalMovement = JSON.parse(localStorage.getItem('movement'))
+    console.log('no entro')
+}
 
 // add all products.
 function onLoadData() {
+    content_products.innerHTML = ''
     LocalProducts.map(product => {
         const add_product = document.createElement('article');
         add_product.classList.add('product');
@@ -175,6 +212,36 @@ function onLoadData() {
         `;
         content_products.appendChild(add_product)
     })
+
+            // Evento para el botón de "sumar" cantidad
+        document.querySelectorAll(".btn_add").forEach(button => {
+            button.addEventListener('click', (event) => add_count(event, "add")); // Pasa el 'event' y "add" a la función
+        });
+
+        // Evento para el botón de "restar" cantidad
+        document.querySelectorAll(".btn_minus").forEach(button => {
+            button.addEventListener('click', (event) => add_count(event, "minus")); // Pasa el 'event' y "minus" a la función
+        });
+
+        // Evento para el botón de "editar" peso
+        document.querySelectorAll(".btn-update").forEach(button => {
+            button.addEventListener('click', (event) => edit_weight(event)); // Pasa el 'event' y "minus" a la función
+        });
+
+        document.querySelectorAll(".check-product").forEach(checkbox => {
+            checkbox.addEventListener('change', (event) => active_checkbox(event))
+        })
+
+        document.querySelectorAll(".input-cantidad").forEach(cantidadChange => {
+            cantidadChange.addEventListener('change', (event) => change_count(event))
+        })
+}
+
+function load_data_local(){
+        localStorage.setItem('products', JSON.stringify(products));
+        localStorage.setItem('movement', JSON.stringify(movement))
+        LocalProducts = JSON.parse(localStorage.getItem('products'))
+        LocalMovement = JSON.parse(localStorage.getItem('movement'))
 }
 
 // Metodo para modificar el peso con las cantidades de los botones mas y menos
@@ -415,6 +482,8 @@ const change_count = (event) => {
 }
 
 
+
+
 // Obtener el modal
 const modal = document.getElementById("myModal");
 
@@ -448,37 +517,23 @@ window.addEventListener('click', function(event) {
     }
 });
 
+function resetData() {
+    load_data_local();
+    onLoadData();
 
+    console.log('Entro a productos')
+}
 
 onLoadData();
-
-// Evento para el botón de "sumar" cantidad
-document.querySelectorAll(".btn_add").forEach(button => {
-    button.addEventListener('click', (event) => add_count(event, "add")); // Pasa el 'event' y "add" a la función
-});
-
-// Evento para el botón de "restar" cantidad
-document.querySelectorAll(".btn_minus").forEach(button => {
-    button.addEventListener('click', (event) => add_count(event, "minus")); // Pasa el 'event' y "minus" a la función
-});
-
-// Evento para el botón de "editar" peso
-document.querySelectorAll(".btn-update").forEach(button => {
-    button.addEventListener('click', (event) => edit_weight(event)); // Pasa el 'event' y "minus" a la función
-});
-
-document.querySelectorAll(".check-product").forEach(checkbox => {
-    checkbox.addEventListener('change', (event) => active_checkbox(event))
-})
-
-document.querySelectorAll(".input-cantidad").forEach(cantidadChange => {
-    cantidadChange.addEventListener('change', (event) => change_count(event))
-})
 
 function loadEventRemove(){
     document.querySelectorAll(".btn-remove-movement").forEach(btnRemoveMovement => {
         btnRemoveMovement.addEventListener('click', (event) => remove_movement(event))
     })
 }
+
+btn_reset.addEventListener('click', () => resetData())
+
+btn_dowload_pdf.addEventListener('click', () => generatePDF())
 
 document.querySelector('.btn-new-update').addEventListener('click', (event) => new_weight(event));
