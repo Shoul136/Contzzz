@@ -137,28 +137,28 @@ let products = [
     },
     {
         id: 19,
-        descripcion: "Harina 5",
+        descripcion: "Masa 5 oz",
         peso: 10,
         unidad: "Bolitas",
         cantidadActual: 0
     },
     {
         id: 20,
-        descripcion: "Harina 10",
+        descripcion: "Masa 10 oz",
         peso: 10,
         unidad: "Bolitas",
         cantidadActual: 0
     },
     {
         id: 21,
-        descripcion: "Harina 17",
+        descripcion: "Masa 17 oz",
         peso: 10,
         unidad: "Bolitas",
         cantidadActual: 0
     },
     {
         id: 22,
-        descripcion: "Harina 17 Mantq",
+        descripcion: "Masa 17 oz Mantq",
         peso: 10,
         unidad: "Bolitas",
         cantidadActual: 0
@@ -308,7 +308,6 @@ const edit_weight = (event) => {
 
 const load_movement = (id, product) => {
     const allMovement = LocalMovement.filter(movement2 => movement2.fk_product === parseInt(id))
-    console.log(allMovement, 'Local')
     content_movement.innerHTML = ``;
     allMovement.forEach(movement => {
         console.log(movement.weight, 'Movement')
@@ -322,12 +321,14 @@ const load_movement = (id, product) => {
                             <h4 id="pd-description">${product.descripcion}</h4>
                         </div>
                         <div class="c-cantidad">
-                            <input type="number" class="pd-peso" value="${parseFloat(movement.weight)}" onchange="sum_weights()" />
+                            <input type="number" class="pd-peso" value="${parseFloat(movement.weight)}" data-weight='${movement.id}' />
                         </div>
                         <div class="c-options">
                             <button class="btn-remove-movement fa-solid fa-minus" data-movement='${movement.id}'></button>
                         </div>
         `;
+        const pesoInput = new_movement.querySelector('.pd-peso');
+        pesoInput.addEventListener('change', sum_weights);
         content_movement.appendChild(new_movement)
     })
     loadEventRemove();
@@ -350,7 +351,7 @@ const new_weight = (event) => {
                         <h4 id="pd-description">${product.descripcion}</h4>
                     </div>
                     <div class="c-cantidad">
-                        <input type="number" class="pd-peso" value="0" data-weight='${id_movement}' onchange="sum_weights()"/>
+                        <input type="number" class="pd-peso" value="0" data-weight='${id_movement}'/>
                     </div>
                     <div class="c-options">
                         <button class="btn-remove-movement fa-solid fa-minus" data-movement='${id_movement}'></button>
@@ -368,6 +369,8 @@ const new_weight = (event) => {
     };
     LocalMovement.push(nw_movement)
     actualizarLocalStorageMovement()
+    const pesoInput = new_movement.querySelector('.pd-peso');
+    pesoInput.addEventListener('change', sum_weights);
     content_movement.appendChild(new_movement)
     console.log(id)
     loadEventRemove();
@@ -409,27 +412,7 @@ const remove_movement = (event) => {
     sum_weights();
 };
 
-const sum_weights = (event) => {
-    const weights = document.querySelectorAll('.pd-peso');
-    if(weights)
-    {
-        let sum = 0;
-        //weights.forEach(weight => {sum = sum +  parseFloat(weight.value)})
-        weights.forEach(weight => 
-            {
-                const currentlyMovement = parseInt(weight.dataset.weight);
-                const movementToUpdate = LocalMovement.find(mov => mov.id === currentlyMovement);
-                if (movementToUpdate) {
-                    movementToUpdate.weight = parseFloat(weight.value);
-                }
-                sum = sum + parseFloat(weight.value)
-            })
-        sum = sum.toFixed(2);
-        console.log(LocalMovement, 'Sumo')
-        actualizarLocalStorageMovement();
-        document.querySelector('#c-total').textContent = sum;
-    }
-}
+
 
 const active_checkbox = (event) => {
     const product = event.target.closest('.product'); // Encuentra el producto padre del checkbox
@@ -531,6 +514,33 @@ function loadEventRemove(){
     document.querySelectorAll(".btn-remove-movement").forEach(btnRemoveMovement => {
         btnRemoveMovement.addEventListener('click', (event) => remove_movement(event))
     })
+}
+
+const sum_weights = (event) => {
+    const weights = document.querySelectorAll('.pd-peso');
+    if(weights)
+    {
+        let sum = 0;
+        //weights.forEach(weight => {sum = sum +  parseFloat(weight.value)})
+        console.log('Entro a sumar pesos')
+        weights.forEach(weight => 
+            { 
+                console.log('Id de movement:', weight.dataset.weight)
+                const currentlyMovement = parseInt(weight.dataset.weight);
+                const movementToUpdate = LocalMovement.find(mov => mov.id === currentlyMovement);
+                if (movementToUpdate) {
+                    console.log('Encontro el movement')
+                    movementToUpdate.weight = parseFloat(weight.value);
+                }else{
+                    console.log('No encontro el movement')
+                }
+                sum = sum + parseFloat(weight.value)
+            })
+        sum = sum.toFixed(2);
+        console.log(LocalMovement, 'Sumo')
+        actualizarLocalStorageMovement();
+        document.querySelector('#c-total').textContent = sum;
+    }
 }
 
 btn_reset.addEventListener('click', () => resetData())

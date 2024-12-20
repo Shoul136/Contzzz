@@ -26,8 +26,7 @@ const generatePDF = (products) => {
     if (products.length === 0) {
         doc.text("No hay productos disponibles.", pageWidth / 2, margen + 35, { align: 'center' });
     } else {
-        // Aquí puedes agregar la lógica para imprimir la lista de productos, por ejemplo:
-        let yPosition = margen + 50; // Empieza un poco más abajo después de la línea
+        let yPosition = margen + 50; 
         doc.setLineWidth(0.2);
         products.forEach((product, index) => {
             const num = (product.id).toString().padStart(2, '0');
@@ -36,14 +35,13 @@ const generatePDF = (products) => {
             doc.text(`${(product.cantidadActual * product.peso).toFixed(2)}`, pageWidth - 10, yPosition, { align: 'right' });
             doc.setDrawColor("#8d8c8c");
             doc.line(10, yPosition + 5, pageWidth - 10, yPosition + 3)
-            yPosition += 10; // Espacio entre productos
+            yPosition += 10; 
         });
     }
     doc.save(`Cierre de ${generateCurrentlyDateFormatPDF()}.pdf`);
 };
 
 function generateCurrentlyDate(){
-    // Crear un objeto Date con la fecha actual
     const fecha = new Date();
 
     // Opciones para el formato de fecha en español
